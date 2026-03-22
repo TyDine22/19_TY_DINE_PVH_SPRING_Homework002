@@ -30,6 +30,7 @@ public class InstructorController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @Operation(summary = "Get instructor by ID")
     @GetMapping("/{instructor-id}")
     public ResponseEntity<ApiResponse<Instructor>> getInstructorById(@PathVariable("instructor-id") Long instructorId) {
         Instructor instructor = instructorService.getInstructorById(instructorId);
@@ -41,6 +42,7 @@ public class InstructorController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @Operation(summary = "Create a new instructor")
     @PostMapping()
     public ResponseEntity<ApiResponse<Instructor>> addInstructor(@RequestBody InstructorRequest request) {
         Instructor instructor = instructorService.addInstructor(request);
@@ -48,6 +50,7 @@ public class InstructorController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @Operation(summary = "Update instructor by ID")
     @PutMapping("/{instructor-id}")
     public ResponseEntity<ApiResponse<Instructor>> updateInstructorById(@PathVariable("instructor-id") Long instructorId, @RequestBody InstructorRequest request) {
         Instructor instructor = instructorService.updateInstructorById(instructorId, request);
@@ -59,6 +62,7 @@ public class InstructorController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @Operation(summary = "Delete instructor by ID")
     @DeleteMapping("/{instructor-id}")
     public ResponseEntity<?> deleteInstructorById(@PathVariable("instructor-id") Long instructorId) {
         boolean deleted = instructorService.deleteInstructorById(instructorId);

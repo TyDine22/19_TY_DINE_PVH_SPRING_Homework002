@@ -4,6 +4,7 @@ import com.example._19_ty_dine_pvh_springboot_homework002.model.entity.Course;
 import com.example._19_ty_dine_pvh_springboot_homework002.model.request.CourseRequest;
 import com.example._19_ty_dine_pvh_springboot_homework002.model.response.ApiResponse;
 import com.example._19_ty_dine_pvh_springboot_homework002.service.CourseService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ public class CourseController {
         this.courseService = courseService;
     }
 
+    @Operation(summary = "Get all courses")
     @GetMapping()
     public ResponseEntity<ApiResponse<List<Course>>> getAllCourses(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size) {
         List<Course> courses = courseService.getAllCourses(page, size);
@@ -28,6 +30,7 @@ public class CourseController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @Operation(summary = "Get course by ID")
     @GetMapping("/{course-id}")
     public ResponseEntity<ApiResponse<Course>> getCourseById(@PathVariable("course-id") Long courseId) {
         Course course = courseService.getCourseById(courseId);
@@ -39,6 +42,7 @@ public class CourseController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @Operation(summary = "Create a new course")
     @PostMapping()
     public ResponseEntity<ApiResponse<Course>> addCourse(@RequestBody CourseRequest request) {
         Course course = courseService.addCourse(request);
@@ -50,6 +54,7 @@ public class CourseController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @Operation(summary = "Update course by ID")
     @PutMapping("/{course-id}")
     public ResponseEntity<ApiResponse<Course>> updateCourseById(@PathVariable("course-id") Long courseId, @RequestBody CourseRequest request) {
         Course course = courseService.updateCourseById(courseId, request);
@@ -72,6 +77,7 @@ public class CourseController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @Operation(summary = "Delete course by ID")
     @DeleteMapping("/{course-id}")
     public ResponseEntity<?> deleteCourseById(@PathVariable("course-id") Long courseId) {
         boolean deleted = courseService.deleteCourseById(courseId);
@@ -82,5 +88,4 @@ public class CourseController {
         ApiResponse<Course> response = ApiResponse.<Course>builder().success(false).status(HttpStatus.NOT_FOUND.value()).message("No courses found with the given ID").timestamps(Instant.now()).build();
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
-
 }
